@@ -1,4 +1,4 @@
-CREATE DATABASE test;
+CREATE DATABASE IF NOT EXISTS `test`;
 
 CREATE USER 'user'@'localhost' IDENTIFIED BY 'user';
 GRANT ALL PRIVILEGES ON test.* TO 'user'@'localhost';
