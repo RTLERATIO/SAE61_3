@@ -4,15 +4,16 @@ ini_set('display_errors', 1);
 
 session_start();
 
-// Check if the username is set in the session
+// Vérifiez si le nom d'utilisateur est défini dans la session
 $usernamesave = isset($_SESSION['username']) ? $_SESSION['username'] : '';
 
-// Redirect to login page if username is not set
+// Redirigez vers la page de connexion si le nom d'utilisateur n'est pas défini
 if (empty($usernamesave)) {
     header('Location: index.php');
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -56,8 +57,41 @@ if (empty($usernamesave)) {
             <h2>Accueil SAE61</h2>
             <br>
             <?php echo "Bonjour $usernamesave"; ?>
+            <br><br>
+            Voici un cookie :
+            <br><br>
+            <img class="cookie-img" src="https://img.freepik.com/photos-gratuite/biscuits-aux-pepites-chocolat-isoles-fond-blanc-ai-generatif_123827-24066.jpg">
+
+            <?php
+            // Connexion à la base de données
+            $conn = new mysqli("db", "user", "user", "test");
+
+            // Vérifiez si la connexion a échoué
+            if ($conn->connect_error) {
+                die("Erreur de connexion à la base de données : " . $conn->connect_error);
+            }
+
+            // Requête SQL pour récupérer tous les utilisateurs
+            $sql = "SELECT * FROM user";
+            $result = $conn->query($sql);
+
+            // Vérifiez s'il y a des résultats
+            if ($result->num_rows > 0) {
+                echo "<br>Voici la liste des utilisateurs : <br><br>";
+                echo "<ul>";
+                // Parcourez les résultats et affichez chaque utilisateur
+                while ($row = $result->fetch_assoc()) {
+                    echo "<li>" . $row["username"] . "</li>";
+                }
+                echo "</ul>";
+            } else {
+                echo "Aucun utilisateur trouvé.";
+            }
+
+            // Fermez la connexion à la base de données
+            $conn->close();
+            ?>
         </span></td></tr>
     </table>
 </body>
 </html>
-
