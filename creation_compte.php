@@ -25,7 +25,9 @@ $usernamesave = isset($_POST['username']) ? $_POST['username'] : '';
         }
 
         .pagecontent {
-            /* Ajoutez vos styles pour le contenu de la page ici */
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
 
         .longtext {
@@ -38,7 +40,6 @@ $usernamesave = isset($_POST['username']) ? $_POST['username'] : '';
 
         form {
             width: 300px;
-            margin: 0 auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
@@ -93,9 +94,12 @@ $usernamesave = isset($_POST['username']) ? $_POST['username'] : '';
             <br>Votre mot de passe :<br>
             <input type="password" name="password" id="password" minlength="6" maxlength="15" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[#%{}@]).{6,15}" required/>
             <br>
-            <input type="submit" value="creation">
-            <br>
-            <a href="index.php" class="button">Page précédente</a>
+            <div style="text-align: center;">
+                <input type="submit" value="Création">
+                <br>
+                <a href="index.php" type="submit" class="button">Page précédente</a>
+            </div>
+
         </form>
 
         <?php
