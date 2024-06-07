@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $salt = $row['salt'];
 
         $combinedPassword = $password . $salt;
-        $hashedPassword = md5($combinedPassword);
+        $hashedPassword = sha1($combinedPassword);
 
         if ($storedHash === $hashedPassword) {
             $_SESSION['username'] = $username;
