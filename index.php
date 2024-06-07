@@ -9,14 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adressemail = trim($_POST["adressemail"]);
     $password = trim($_POST["password"]);
 
-    // If the username or password is blank then return FALSE.
     if (empty($username) || empty($password)) {
         echo "Username or password cannot be empty";
         return FALSE;
     }
 
-    // Get the salt and hashed password from the database.
-    $conn = mysqli_connect("db", "user", "user", "test"); // Utiliser "db" comme hôte et "user" comme mot de passe
+    $conn = mysqli_connect("db", "user", "user", "test");
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
@@ -31,11 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $storedHash = $row['password'];
         $salt = $row['salt'];
 
-        // Combine password with salt and hash it.
         $combinedPassword = $password . $salt;
         $hashedPassword = md5($combinedPassword);
 
-        // If the hashed password matches the stored hash, log the user in.
         if ($storedHash === $hashedPassword) {
             $_SESSION['username'] = $username;
             header('Location: accueil.php');
@@ -56,7 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Connection - SAE61</title>
     <style>
-        /* Styles CSS */
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
