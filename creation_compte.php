@@ -30,10 +30,6 @@ $usernamesave = isset($_POST['username']) ? $_POST['username'] : '';
             justify-content: center;
         }
 
-        .longtext {
-            /* Ajoutez vos styles pour le texte long ici */
-        }
-
         h2 {
             color: #003B5E;
         }
@@ -108,31 +104,24 @@ $usernamesave = isset($_POST['username']) ? $_POST['username'] : '';
             $adressemail = $_POST["adressemail"];
             $password = $_POST["password"];
 
-            // Générer un sel aléatoire
             $salt = generateSalt();
 
-            // Concaténer le sel avec le mot de passe
             $hashed_password = md5($password . $salt);
 
-            // Establish a database connection
             $conn = new mysqli("db", "user", "user", "test");  // Utiliser "db" comme hôte et "user" comme mot de passe
 
-            // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
-
-            // Check if the user already exists
+            
             $stmt = $conn->prepare("SELECT * FROM user WHERE username=? AND adressemail=?");
             $stmt->bind_param("ss", $username, $adressemail);
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
-                // Utilisateur existe déjà
                 echo "L'utilisateur existe déjà";
             } else {
-                // Utilisateur n'existe pas
                 $stmt = $conn->prepare("INSERT INTO user (username, password, adressemail, salt) VALUES (?, ?, ?, ?)");
                 $stmt->bind_param("ssss", $username, $hashed_password, $adressemail, $salt);
 
@@ -148,7 +137,6 @@ $usernamesave = isset($_POST['username']) ? $_POST['username'] : '';
             $conn->close();
         }
 
-        // Fonction pour générer un sel aléatoire
         function generateSalt($length = 16) {
             return bin2hex(random_bytes($length));
         }
